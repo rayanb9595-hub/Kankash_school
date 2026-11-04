@@ -1,0 +1,329 @@
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KANKASH | مدرسه کنکاش</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Tahoma,Arial;background:#071426;color:#fff}
+header{background:#102442;padding:25px 15px;text-align:center;border-bottom:3px solid #d9ad50}
+header h1{color:#e9bd62;margin:5px;font-size:30px}
+header p{color:#ddd}
+nav{display:flex;flex-wrap:wrap;justify-content:center;background:#0b1c32;padding:10px;gap:7px}
+nav button,.btn{background:#d9ad50;color:#071426;border:0;padding:11px 15px;border-radius:8px;font-weight:bold;cursor:pointer}
+nav button:hover,.btn:hover{background:#ffda82}
+main{max-width:1000px;margin:auto;padding:18px}
+section{display:none;background:#102442;padding:20px;margin:15px 0;border-radius:14px;border:1px solid #314763}
+section.active{display:block}
+h2{color:#e9bd62}
+input,select,textarea{width:100%;padding:12px;margin:7px 0 14px;border-radius:8px;border:1px solid #777;font-family:Tahoma}
+.card{background:#192f4b;border:1px solid #40516b;padding:15px;border-radius:10px;margin:10px 0}
+.card h3{color:#e9bd62}
+a{color:#f5ca70}
+footer{text-align:center;padding:25px;color:#aaa}
+label{display:block}
+</style>
+</head>
+<body>
+
+<header>
+<h1>مدرسه کنکاش</h1>
+<p>KANKASH SCHOOL</p>
+<p>سال تحصیلی ۱۴۰۵ - ۱۴۰۶</p>
+</header>
+
+<nav>
+<button onclick="show('home')">خانه</button>
+<button onclick="show('register')">ثبت‌نام</button>
+<button onclick="show('videos')">ویدیوها</button>
+<button onclick="show('news')">اطلاعیه‌ها</button>
+<button onclick="show('gallery')">گالری</button>
+<button onclick="show('weekly')">برنامه هفتگی</button>
+<button onclick="show('exams')">امتحانات</button>
+<button onclick="show('teachers')">معلمان</button>
+<button onclick="show('contact')">ارتباط</button>
+<button onclick="show('admin')">مدیریت</button>
+</nav>
+
+<main>
+
+<section id="home" class="active">
+<h2>به مدرسه کنکاش خوش آمدید</h2>
+<p>به وب‌سایت رسمی مدرسه کنکاش خوش آمدید.</p>
+<div class="card">
+<h3>آموزش، تلاش، موفقیت</h3>
+<p>همراه شما در مسیر یادگیری و پیشرفت.</p>
+</div>
+</section>
+
+<section id="register">
+<h2>ثبت‌نام دانش‌آموزان</h2>
+<form id="regForm">
+<label>نام و نام خانوادگی دانش‌آموز</label>
+<input name="student" placeholder="نام دانش‌آموز" required>
+<label>پایه تحصیلی</label>
+<select name="grade" required>
+<option value="">انتخاب پایه</option>
+<option>اول</option><option>دوم</option><option>سوم</option>
+<option>چهارم</option><option>پنجم</option><option>ششم</option>
+<option>هفتم</option><option>هشتم</option><option>نهم</option>
+</select>
+<label>نام ولی دانش‌آموز</label>
+<input name="parent" placeholder="نام ولی" required>
+<label>شماره تماس ولی</label>
+<input name="phone" type="tel" placeholder="شماره تماس" required>
+<button class="btn">ثبت‌نام</button>
+</form>
+<div id="regMessage"></div>
+</section>
+
+<section id="videos">
+<h2>ویدیوهای مدرسه</h2>
+<div id="videoList"></div>
+</section>
+
+<section id="news">
+<h2>اطلاعیه‌ها</h2>
+<div id="newsList"></div>
+</section>
+
+<section id="gallery">
+<h2>گالری تصاویر</h2>
+<div id="galleryList"></div>
+</section>
+
+<section id="weekly">
+<h2>برنامه هفتگی</h2>
+<div class="card">برنامه هفتگی مدرسه به‌زودی منتشر می‌شود.</div>
+</section>
+
+<section id="exams">
+<h2>تقویم امتحانات</h2>
+<div id="examList"></div>
+</section>
+
+<section id="teachers">
+<h2>معلمان مدرسه</h2>
+<div id="teacherList"></div>
+</section>
+
+<section id="contact">
+<h2>ارتباط با مدرسه</h2>
+<form id="contactForm">
+<label>نام شما</label>
+<input name="name" required>
+<label>موضوع پیام</label>
+<input name="subject" required>
+<label>متن پیام</label>
+<textarea name="message" rows="5" required></textarea>
+<button class="btn">ارسال پیام</button>
+</form>
+<div id="contactMessage"></div>
+</section>
+
+<section id="admin">
+<h2>پنل مدیریت مدرسه</h2>
+<div id="loginArea">
+<p>برای ورود رمز مدیریت را وارد کنید.</p>
+<input id="password" type="password" placeholder="رمز مدیریت">
+<button class="btn" onclick="login()">ورود</button>
+<p id="loginMessage"></p>
+</div>
+
+<div id="adminArea" style="display:none">
+<h3>افزودن اطلاعیه</h3>
+<input id="newsTitle" placeholder="عنوان اطلاعیه">
+<textarea id="newsText" placeholder="متن اطلاعیه"></textarea>
+<button class="btn" onclick="addItem('news')">انتشار اطلاعیه</button>
+
+<h3>افزودن ویدیو</h3>
+<input id="videoTitle" placeholder="عنوان ویدیو">
+<input id="videoUrl" placeholder="لینک ویدیو">
+<button class="btn" onclick="addItem('videos')">افزودن ویدیو</button>
+
+<h3>افزودن معلم</h3>
+<input id="teacherName" placeholder="نام معلم">
+<input id="teacherSubject" placeholder="درس">
+<button class="btn" onclick="addItem('teachers')">افزودن معلم</button>
+
+<h3>افزودن امتحان</h3>
+<input id="examTitle" placeholder="نام امتحان">
+<input id="examDate" type="date">
+<button class="btn" onclick="addItem('exams')">افزودن امتحان</button>
+
+<h3>افزودن عکس به گالری</h3>
+<input id="galleryUrl" placeholder="لینک مستقیم عکس">
+<button class="btn" onclick="addItem('gallery')">افزودن عکس</button>
+
+<hr>
+<h3>ثبت‌نام‌های انجام‌شده</h3>
+<div id="registrations"></div>
+
+<h3>پیام‌های دریافتی</h3>
+<div id="messages"></div>
+
+<button class="btn" onclick="logout()">خروج از مدیریت</button>
+</div>
+</section>
+
+</main>
+
+<footer>
+مدرسه کنکاش | KANKASH SCHOOL
+</footer>
+
+<script>
+const defaults={
+news:[],videos:[],teachers:[],exams:[],gallery:[],registrations:[],messages:[]
+};
+
+function getData(){
+try{
+return JSON.parse(localStorage.getItem('kankash_school_data'))||defaults;
+}catch(e){return defaults}
+}
+
+let data=getData();
+
+function save(){
+localStorage.setItem('kankash_school_data',JSON.stringify(data));
+}
+
+function show(id){
+document.querySelectorAll('main section').forEach(s=>s.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+render();
+window.scrollTo(0,0);
+}
+
+function escapeHTML(value){
+return String(value).replace(/[&<>"']/g,c=>({
+'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+}[c]));
+}
+
+document.getElementById('regForm').addEventListener('submit',function(e){
+e.preventDefault();
+let f=new FormData(this);
+data.registrations.push({
+student:f.get('student'),
+grade:f.get('grade'),
+parent:f.get('parent'),
+phone:f.get('phone')
+});
+save();
+this.reset();
+document.getElementById('regMessage').textContent='ثبت‌نام شما با موفقیت ثبت شد.';
+});
+
+document.getElementById('contactForm').addEventListener('submit',function(e){
+e.preventDefault();
+let f=new FormData(this);
+data.messages.push({
+name:f.get('name'),
+subject:f.get('subject'),
+message:f.get('message')
+});
+save();
+this.reset();
+document.getElementById('contactMessage').textContent='پیام شما ثبت شد.';
+});
+
+function login(){
+if(document.getElementById('password').value==='konkash1405'){
+document.getElementById('loginArea').style.display='none';
+document.getElementById('adminArea').style.display='block';
+render();
+}else{
+document.getElementById('loginMessage').textContent='رمز اشتباه است!';
+}
+}
+
+function logout(){
+document.getElementById('adminArea').style.display='none';
+document.getElementById('loginArea').style.display='block';
+document.getElementById('password').value='';
+}
+
+function addItem(type){
+let item=null;
+
+if(type==='news'){
+let title=document.getElementById('newsTitle').value.trim();
+let content=document.getElementById('newsText').value.trim();
+if(!title||!content)return alert('عنوان و متن را وارد کنید');
+item={title,content};
+document.getElementById('newsTitle').value='';
+document.getElementById('newsText').value='';
+}
+
+if(type==='videos'){
+let title=document.getElementById('videoTitle').value.trim();
+let url=document.getElementById('videoUrl').value.trim();
+if(!title||!url)return alert('عنوان و لینک را وارد کنید');
+if(!/^https?:\/\//i.test(url))return alert('لینک باید با http یا https شروع شود');
+item={title,url};
+document.getElementById('videoTitle').value='';
+document.getElementById('videoUrl').value='';
+}
+
+if(type==='teachers'){
+let name=document.getElementById('teacherName').value.trim();
+let subject=document.getElementById('teacherSubject').value.trim();
+if(!name||!subject)return alert('اطلاعات معلم را وارد کنید');
+item={name,subject};
+document.getElementById('teacherName').value='';
+document.getElementById('teacherSubject').value='';
+}
+
+if(type==='exams'){
+let title=document.getElementById('examTitle').value.trim();
+let date=document.getElementById('examDate').value;
+if(!title||!date)return alert('نام و تاریخ امتحان را وارد کنید');
+item={title,date};
+document.getElementById('examTitle').value='';
+document.getElementById('examDate').value='';
+}
+
+if(type==='gallery'){
+let url=document.getElementById('galleryUrl').value.trim();
+if(!url)return alert('لینک عکس را وارد کنید');
+if(!/^https?:\/\//i.test(url))return alert('لینک باید با http یا https شروع شود');
+item={url};
+document.getElementById('galleryUrl').value='';
+}
+
+data[type].push(item);
+save();
+render();
+alert('با موفقیت اضافه شد!');
+}
+
+function listCards(id,items,make){
+document.getElementById(id).innerHTML=items.length?
+items.map(make).join(''):'<div class="card">هنوز محتوایی اضافه نشده است.</div>';
+}
+
+function render(){
+listCards('newsList',data.news,x=>`<div class="card"><h3>${escapeHTML(x.title)}</h3><p>${escapeHTML(x.content)}</p></div>`);
+
+listCards('videoList',data.videos,x=>`<div class="card"><h3>${escapeHTML(x.title)}</h3><a href="${escapeHTML(x.url)}" target="_blank" rel="noopener">تماشای ویدیو</a></div>`);
+
+listCards('teacherList',data.teachers,x=>`<div class="card"><h3>${escapeHTML(x.name)}</h3><p>${escapeHTML(x.subject)}</p></div>`);
+
+listCards('examList',data.exams,x=>`<div class="card"><h3>${escapeHTML(x.title)}</h3><p>${escapeHTML(x.date)}</p></div>`);
+
+listCards('galleryList',data.gallery,x=>`<div class="card"><img src="${escapeHTML(x.url)}" alt="تصویر مدرسه" style="width:100%;max-width:400px;border-radius:8px"></div>`);
+
+listCards('registrations',data.registrations,x=>`<div class="card"><b>${escapeHTML(x.student)}</b><p>پایه: ${escapeHTML(x.grade)}</p><p>ولی: ${escapeHTML(x.parent)}</p><p>تلفن: ${escapeHTML(x.phone)}</p></div>`);
+
+listCards('messages',data.messages,x=>`<div class="card"><b>${escapeHTML(x.name)}</b><p>${escapeHTML(x.subject)}</p><p>${escapeHTML(x.message)}</p></div>`);
+}
+
+render();
+</script>
+</body>
+  </html>
+  
